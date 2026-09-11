@@ -1,15 +1,12 @@
 local gallery = {}
 local Settings = require("Settings")
 
-local GUI_WIDTH = 240
-local GUI_HEIGHT = 250
+local GUI_WIDTH = 200
+local GUI_HEIGHT = 140
 
 -- Main gallery surfaces.
 local toggleGUI = nil
 local onClose = nil
-
--- Component handles retained by the demo.
-local globalToggle = nil
 
 -- Build our primary window
 local function createDemoWindow(gameArea)
@@ -21,18 +18,17 @@ local function createDemoWindow(gameArea)
         yAnchor = 0,
         width = GUI_WIDTH,
         height = GUI_HEIGHT,
-        minWidth = 240,
-        minHeight = 250,
+        minWidth = 200,
+        minHeight = 140,
         onClose = function()
             if onClose then onClose() end
         end,
     })
 end
 
--- Demo sections appear here in the same order as they appear in the UI.
 local function createWindow(window)
     window:AddTitle("Global Toggle")
-    globalToggle = window:AddCheckboxButton({
+    window:AddCheckboxButton({
         { text = "Enable Plugin", value = "enabled", selected = Settings.get("enabled") },
     }, {
         onChange = function(_, _, changedValue, selected)
