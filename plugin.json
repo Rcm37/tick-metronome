@@ -1,10 +1,13 @@
 {
   "name": "TickMetronome",
   "version": "0.1.0",
-  "requiredDependencies": [
-    "prettyui"
-  ],
-  "optionalDependencies": [],
+  "contactEmailAddress": "rcm37rs@gmail.com",
+  "hasRibbonIcon": true,
+  "hasSettingsIcon": true,
+  "requiredDependencies": {
+    "prettyui" : 6398181
+  },
+  "optionalDependencies": {},
   "requiredPermissions": [],
   "optionalPermissions": []
 }
