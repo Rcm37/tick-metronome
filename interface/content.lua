@@ -1,7 +1,7 @@
 local contentView
 local Settings = require("settings")
 local UIUtils = require("interface/ui_utils")
-Event.ContentLayerReady.Subscribe("my-plugin-content", function(event)
+Event.ContentLayerReady.Subscribe("tick-metronome-content-pane", function(event)
     if contentView then contentView:Destroy() end
 
     local parent = event.component
