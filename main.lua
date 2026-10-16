@@ -1,16 +1,10 @@
-local Settings = require("settings")
-local contentView = require("interface/content")
+local Metronome = require("metronome")
+local ContentPane = require("interface/content")
+
+Metronome.Start()
+ContentPane.Start()
 
 function PluginShutdown()
-    Event.ContentLayerReady.Unsubscribe("tick-metronome-content-pane")
-    if contentView then
-        contentView:Destroy()
-        contentView = nil
-    end
+    ContentPane.Shutdown()
+    Metronome.Shutdown()
 end
-
-Event.ServerLogic.Subscribe("tick-metronome-server-logic", function(serverLogicEvent)
-    if Settings.get("enabled") then
-        local playMetronome = audio.Play(Plugin.resources.metro)
-    end
-end)
