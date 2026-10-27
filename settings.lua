@@ -1,4 +1,13 @@
 local Settings = {}
+local listeners = {}
+
+function Settings.Subscribe(key, callback)
+    listeners[key] = callback
+end
+
+function Settings.Unsubscribe(key)
+    listeners[key] = nil
+end
 
 local PLUGIN_DB_PREFIX = "tick_metronome_"
 
@@ -22,13 +31,13 @@ end
 function Settings.update(settingName, value)
     assertValidSetting(settingName)
 
-    CachedSettings[settingName] = value
-
     if type(value) ~= "boolean" then
         error("Expected boolean for setting: " .. tostring(settingName))
     end
 
     PersistentDB:SetBool(makeKey(settingName), value)
+    CachedSettings[settingName] = value
+    for _, callback in pairs(listeners) do callback(settingName, value) end
 end
 
 function Settings.get(settingName)
@@ -41,11 +50,11 @@ function Settings.get(settingName)
     local value = PersistentDB:GetBool(makeKey(settingName))
 
     if value == nil then
-        PersistentDB:SetBool(makeKey(settingName), ValidSettings[settingName])
-        CachedSettings[settingName] = ValidSettings[settingName]
-        return ValidSettings[settingName]
+        value = ValidSettings[settingName]
+        PersistentDB:SetBool(makeKey(settingName), value)
     end
 
+    CachedSettings[settingName] = value
     return value
 end
 
